@@ -5,7 +5,7 @@
   "name": "状态红绿灯",
   "description": "显示本机任务状态",
   "whenToUse": "显示本机任务状态",
-  "version": "1.4.0",
+  "version": "1.4.4",
   "kind": "chip",
   "entry": "main.js",
   "launch": "resident",
@@ -29,5 +29,6 @@
     "lifecycle": "resident"
   },
   "settingsHtml": "settings.html",
-  "icon": "assets/icon.png"
+  "icon": "assets/icon.png",
+  "releaseNotes": "• 清空任务面板时，只清除当前灯色的提示，其他两盏灯继续显示。\n• 修复伙伴完成任务后绿灯漏亮，以及刷新或重启后已读完成项重新出现的问题。\n• 新增「隐藏定时任务（Schedule）」设置，默认开启，兼容旧版定时任务。\n• 合并同一伙伴主对话在同一灯色下的重复条目，点击后直接进入伙伴对话。"
 }

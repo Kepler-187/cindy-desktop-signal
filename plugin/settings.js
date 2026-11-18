@@ -1,9 +1,11 @@
 const days=document.getElementById('days'), scale=document.getElementById('scale');
 const percent=document.getElementById('percent'), statusText=document.getElementById('status');
 const panelSize=document.getElementById('panelSize'),panelPercent=document.getElementById('panelPercent');
+const hideSchedules=document.getElementById('hideSchedules');
 const channel=new BroadcastChannel('signal-settings');
 async function load(){const r=await fetch('/kv');if(!r.ok)throw Error();return r.json();}
 load().then(cfg=>{
+ hideSchedules.checked=cfg.hideSchedules!==false;hideSchedules.disabled=false;
  days.value=String(cfg.days||1);scale.value=String(cfg.scale||100);
  panelSize.value=String(cfg.panelSize||100);panelPercent.value=panelSize.value+'%';panelSize.disabled=false;
  percent.value=scale.value+'%';days.disabled=scale.disabled=false;
@@ -40,3 +42,5 @@ panelSize.onkeyup=finish;
 panelSize.onblur=endPreview;
 window.addEventListener('pointercancel',endPreview);
 window.addEventListener('pagehide',endPreview);
+
+hideSchedules.onchange=()=>save('hideSchedules',hideSchedules.checked);

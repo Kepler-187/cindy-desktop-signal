@@ -39,8 +39,13 @@ class Signal : Window {
   try{var xy=File.ReadAllLines(save);double x=int.Parse(xy[0]),y=int.Parse(xy[1]);if(x>=SystemParameters.VirtualScreenLeft&&x+Width<=SystemParameters.VirtualScreenLeft+SystemParameters.VirtualScreenWidth&&y>=SystemParameters.VirtualScreenTop&&y+Height<=SystemParameters.VirtualScreenTop+SystemParameters.VirtualScreenHeight){Left=x;Top=y;}}catch(Exception){}
   var scroll=new ScrollViewer{Content=list,MaxHeight=300,VerticalScrollBarVisibility=ScrollBarVisibility.Auto};
   var header=new DockPanel{Margin=new Thickness(3,2,2,6)};
-  var clear=new Button{Content="清空",Padding=new Thickness(8,2,8,2),ToolTip="清空三盏灯的当前提示",Cursor=Cursors.Hand};
-  clear.Click+=(s,e)=>{Console.WriteLine("click "+Convert.ToBase64String(Encoding.UTF8.GetBytes("!clear")));Console.Out.Flush();Apply(new Snapshot{rows=new Row[0],note=""});};
+  var clear=new Button{Content="清空",Padding=new Thickness(8,2,8,2),ToolTip="仅清空当前灯的提示",Cursor=Cursors.Hand};
+  clear.Click+=(s,e)=>{
+   if(selected<0)return;
+   var group=groups[selected];
+   Console.WriteLine("click "+Convert.ToBase64String(Encoding.UTF8.GetBytes("!clear/"+group)));Console.Out.Flush();
+   state.rows=state.rows.Where(r=>r.group!=group).ToArray();Apply(state);
+  };
   DockPanel.SetDock(clear,Dock.Right);header.Children.Add(clear);header.Children.Add(heading);
   var content=new StackPanel();content.Children.Add(header);content.Children.Add(scroll);
   var border=new Border{LayoutTransform=panelScale,Background=new SolidColorBrush(Color.FromRgb(39,38,35)),CornerRadius=new CornerRadius(9),Padding=new Thickness(12),Width=265,Child=content};
