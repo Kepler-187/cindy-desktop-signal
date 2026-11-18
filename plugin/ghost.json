@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 3,
+  "minCindyVersion": "0.1.137",
+  "id": "desktop-signal",
+  "name": "状态红绿灯",
+  "description": "显示本机任务状态",
+  "whenToUse": "显示本机任务状态",
+  "version": "1.4.0",
+  "kind": "chip",
+  "entry": "main.js",
+  "launch": "resident",
+  "subscribe": {
+    "topics": [
+      "task-state",
+      "session"
+    ]
+  },
+  "agent": {
+    "hostTools": [
+      "history",
+      "control"
+    ],
+    "companions": true,
+    "observe": true
+  },
+  "node": {
+    "entry": "node/worker.cjs",
+    "protocol": "json-rpc-stdio",
+    "lifecycle": "resident"
+  },
+  "settingsHtml": "settings.html",
+  "icon": "assets/icon.png"
+}
